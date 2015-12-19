@@ -2,16 +2,31 @@ import React from 'react';
 
 import Dropzone from 'react-dropzone';
 
+
 export default class FileUpload extends React.Component {
 
   constructor() {
     super();
   }
 
+  // Read the contents of a file.
+  //http://demos.mattwest.io/drag-and-drop/
+  readTextFile(file) {
+    var reader = new FileReader();
+
+    reader.onloadend = (e) => {
+      if (e.target.readyState == FileReader.DONE) {
+        var content = reader.result;
+        this.props.add(file.name, content);
+      }
+    };
+
+    reader.readAsBinaryString(file);
+  }
+
+
   onDrop(files) {
-    this.setState({
-      files: files
-    });
+    files.forEach((file) => this.readTextFile(file));
   }
 
   onOpenClick() {
@@ -28,7 +43,10 @@ export default class FileUpload extends React.Component {
           Open Dropzone
         </button>
       </div>
-    )
+    );
   }
-
 }
+
+FileUpload.propTypes = {
+  add: React.PropTypes.func
+};

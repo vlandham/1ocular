@@ -3,7 +3,7 @@ import Immutable from 'immutable';
 import { ADD_TEXT, REMOVE_TEXT } from './actions';
 
 export var INITIAL_STATE = Immutable.fromJS({
-  sourceTexts: {},
+  texts: {},
   tokens: {},
   options: {}
 });
@@ -11,7 +11,8 @@ export var INITIAL_STATE = Immutable.fromJS({
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case ADD_TEXT:
-      return state;
+      console.log(action.textId);
+      return state.updateIn(['texts', action.textId], () => action.text);
     case REMOVE_TEXT:
       return state;
     default:
