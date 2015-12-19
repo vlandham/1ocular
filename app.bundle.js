@@ -71,7 +71,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	//eslint: ignore
+	//eslint-disable-line
 	
 	_reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.querySelector("#main"));
 
@@ -19751,6 +19751,10 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	/**
+	* Main App for tool
+	*/
+	
 	var App = (function (_React$Component) {
 	  (0, _inherits3.default)(App, _React$Component);
 	
@@ -19760,7 +19764,6 @@
 	    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(App).call(this));
 	
 	    _this.state = _reducer.INITIAL_STATE.toJS();
-	    console.log(_this.state);
 	
 	    _this.store = (0, _store2.default)();
 	
@@ -19776,6 +19779,11 @@
 	      this.store.dispatch((0, _actions.addText)(textId, text));
 	    }
 	  }, {
+	    key: 'removeTextFromStore',
+	    value: function removeTextFromStore(textId) {
+	      this.store.dispatch((0, _actions.removeText)(textId));
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -19787,7 +19795,7 @@
 	          'Upload Your Text Files'
 	        ),
 	        _react2.default.createElement(_FileUpload2.default, { add: this.addTextToStore.bind(this) }),
-	        _react2.default.createElement(_FileList2.default, { texts: this.state.texts }),
+	        _react2.default.createElement(_FileList2.default, { texts: this.state.texts, remove: this.removeTextFromStore.bind(this) }),
 	        _react2.default.createElement(
 	          'h2',
 	          null,
@@ -21302,7 +21310,10 @@
 	var INITIAL_STATE = exports.INITIAL_STATE = _immutable2.default.fromJS({
 	  texts: {},
 	  tokens: {},
-	  options: {}
+	  tokenizeOptions: {
+	    "removePunctuation": true,
+	    "split": "words"
+	  }
 	});
 	
 	function reducer() {
@@ -21311,12 +21322,11 @@
 	
 	  switch (action.type) {
 	    case _actions.ADD_TEXT:
-	      console.log(action.textId);
 	      return state.updateIn(['texts', action.textId], function () {
 	        return action.text;
 	      });
 	    case _actions.REMOVE_TEXT:
-	      return state;
+	      return state.deleteIn(['texts', action.textId]);
 	    default:
 	      return state;
 	  }
@@ -26393,7 +26403,7 @@
 	  }
 	
 	  // Read the contents of a file.
-	  //http://demos.mattwest.io/drag-and-drop/
+	  // http://demos.mattwest.io/drag-and-drop/
 	
 	  (0, _createClass3.default)(FileUpload, [{
 	    key: 'readTextFile',
@@ -26753,7 +26763,7 @@
 /* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -26798,23 +26808,36 @@
 	  }
 	
 	  (0, _createClass3.default)(FileList, [{
-	    key: 'renderText',
+	    key: "renderText",
 	    value: function renderText(key) {
-	
 	      return _react2.default.createElement(
-	        'li',
+	        "li",
 	        { key: key },
-	        key
+	        key,
+	        _react2.default.createElement(
+	          "span",
+	          { className: "remove-text" },
+	          "  ",
+	          _react2.default.createElement(
+	            "a",
+	            { key: key, onClick: this.removeText.bind(this, key) },
+	            "x"
+	          )
+	        )
 	      );
 	    }
 	  }, {
-	    key: 'render',
+	    key: "removeText",
+	    value: function removeText(key) {
+	      this.props.remove(key);
+	    }
+	  }, {
+	    key: "render",
 	    value: function render() {
-	
 	      return _react2.default.createElement(
-	        'ul',
+	        "ul",
 	        null,
-	        (0, _keys2.default)(this.props.texts).map(this.renderText)
+	        (0, _keys2.default)(this.props.texts).map(this.renderText.bind(this))
 	      );
 	    }
 	  }]);
@@ -26822,6 +26845,11 @@
 	})(_react2.default.Component);
 	
 	exports.default = FileList;
+	
+	FileList.propTypes = {
+	  texts: _react2.default.PropTypes.object,
+	  remove: _react2.default.PropTypes.func.isRequired
+	};
 
 /***/ },
 /* 240 */
