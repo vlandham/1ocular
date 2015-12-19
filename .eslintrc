@@ -23,6 +23,8 @@
       "brace-style": [2, "1tbs", { "allowSingleLine": true }],
       "semi": 0,
       "space-infix-ops": 2,
-      "no-unused-vars": 2
+      "no-unused-vars": 2,
+      "no-undef": 2,
+      "semi": [2, "always"]
     }
 }
