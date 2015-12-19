@@ -5,16 +5,18 @@ import { ADD_TEXT, REMOVE_TEXT } from './actions';
 export var INITIAL_STATE = Immutable.fromJS({
   texts: {},
   tokens: {},
-  options: {}
+  tokenizeOptions: {
+    "removePunctuation" : true,
+    "split": "words"
+  }
 });
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case ADD_TEXT:
-      console.log(action.textId);
       return state.updateIn(['texts', action.textId], () => action.text);
     case REMOVE_TEXT:
-      return state;
+      return state.deleteIn(['texts', action.textId]);
     default:
       return state;
   }
