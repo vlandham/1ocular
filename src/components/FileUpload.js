@@ -10,7 +10,7 @@ export default class FileUpload extends React.Component {
   }
 
   // Read the contents of a file.
-  //http://demos.mattwest.io/drag-and-drop/
+  // http://demos.mattwest.io/drag-and-drop/
   readTextFile(file) {
     var reader = new FileReader();
 
