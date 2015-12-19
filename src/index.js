@@ -2,23 +2,11 @@
 import './style.js';
 import '../html/index.html';
 
-import React from 'react';
+import React from 'react'; //eslint: ignore
 import ReactDOM from "react-dom";
 
+import App from './components/App'
 
-class App extends React.Component {
 
-  constructor() {
-    super();
-  }
-
-  render() {
-    return (
-      <div>HELLO</div>
-    )
-
-  }
-
-}
 
 ReactDOM.render(<App />, document.querySelector("#main"));

@@ -45,8 +45,11 @@
   "dependencies": {
     "d3": "^3.5.10",
     "history": "^1.13.1",
+    "immutable": "^3.7.6",
     "lodash": "^3.10.1",
     "react": "^0.14.3",
-    "react-dom": "^0.14.3"
+    "react-dom": "^0.14.3",
+    "react-dropzone": "^3.3.0",
+    "redux": "^3.0.5"
   }
 }
