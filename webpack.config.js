@@ -18,7 +18,7 @@
  */
 var webpack = require('webpack');
 var minimize = process.argv.indexOf('--minimize') === -1 ? false : true;
-var debug = !minimize;
+// var debug = !minimize;
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var plugins = [];
 var path = require("path");
