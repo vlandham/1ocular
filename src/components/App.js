@@ -34,6 +34,7 @@ export default class App extends React.Component {
 
   removeTextFromStore(textId) {
     this.store.dispatch(removeText(textId));
+    this.store.dispatch(createTokens());
   }
 
   render() {
@@ -44,13 +45,13 @@ export default class App extends React.Component {
             <h2>Upload Your Text Files</h2>
             <FileUpload add={this.addTextToStore.bind(this)}/>
           </div>
-          <div className="col-md-6">
-            <h2>Current Tokens</h2>
+          <div className="col-md-4">
+            <h2>Documents &amp; Tokens</h2>
             <TokenSets sets={this.state.tokens}/>
           </div>
         </div>
         <h3>Files Loaded:</h3>
-        <FileList texts={this.state.texts} remove={this.removeTextFromStore.bind(this)}/>
+        <FileList texts={this.state.rawTexts} remove={this.removeTextFromStore.bind(this)}/>
         <h2>Transform Your Text</h2>
         <h3>Split Documents</h3>
         <h3>Tokenize</h3>

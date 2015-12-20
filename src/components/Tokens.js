@@ -14,10 +14,12 @@ export default class Tokens extends React.Component {
   }
 
   render() {
+    var firstTokens = this.props.tokens.slice(0,50);
+
     return (
-      <div key={this.props.id}>
-        <p>{this.props.id}</p>
-        {this.props.tokens.map(this.renderToken.bind(this))}
+      <div className="tokens" key={this.props.id}>
+        <p>{this.props.id} - <span className="token-count">{this.props.tokens.length} tokens</span></p>
+        {firstTokens.map(this.renderToken.bind(this))}
       </div>
     );
   }

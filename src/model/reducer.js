@@ -7,25 +7,29 @@ import { ADD_TEXT,
          SET_REMOVE_PUNCTUATION
        } from './actions';
 
-import { removePunctuation, stringToWords } from '../util/string_utility';
+import { removeAllPunctuation,
+         stringToWords,
+         stringToSentences } from '../util/string_utility';
 
 export var INITIAL_STATE = Immutable.fromJS({
+  rawTexts: {},
   texts: {},
   tokens: {},
   tokenizeOptions: {
     "removePunctuation" : true,
-    "split": "words"
+    "split": "words",
+    "splitOptions": ["words", "sentences"]
   }
 });
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case ADD_TEXT:
-      return state.updateIn(['texts', action.textId], () => action.text);
+      return state.updateIn(['rawTexts', action.textId], () => action.text);
     case REMOVE_TEXT:
-      return state.deleteIn(['texts', action.textId]);
+      return state.deleteIn(['rawTexts', action.textId]);
     case CREATE_TOKENS:
-      var tokens = createTokens(state.get('texts'), state.get('tokenizeOptions'));
+      var tokens = createTokens(state.get('rawTexts'), state.get('tokenizeOptions'));
       return state.set('tokens', tokens);
     case SET_REMOVE_PUNCTUATION:
       return state.updateIn(['tokenizeOptions', 'removePunctuation'], () => action.value);
@@ -36,16 +40,21 @@ export default function reducer(state = INITIAL_STATE, action) {
 
 function createTokens(texts, options) {
   return texts.map((v) => {
-    var text = v;
-    if(options.get('removePunctuation')) {
-      text = removePunctuation(text);
-    }
+    var tokens = v;
     switch (options.get('split')) {
       case 'words':
-        text = stringToWords(text);
+        tokens = stringToWords(tokens);
+        break;
+      case 'sentences':
+        tokens = stringToSentences(tokens);
+        break;
       default:
-        text = text;
+        tokens = tokens;
     }
-    return text;
+
+    if(options.get('removePunctuation')) {
+      tokens = removeAllPunctuation(tokens);
+    }
+    return tokens;
   });
 }

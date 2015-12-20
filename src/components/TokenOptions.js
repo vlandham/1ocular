@@ -17,6 +17,7 @@ export default class TokenOptions extends React.Component {
     var options = this.props.options;
     return (
       <div>
+        <label>Create Tokens From</label>
         <label>Remove Punctuation</label>
         <input type="checkbox"
           checked={options.removePunctuation}
