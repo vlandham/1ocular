@@ -45,7 +45,7 @@ export default class App extends React.Component {
             <h2>Upload Your Text Files</h2>
             <FileUpload add={this.addTextToStore.bind(this)}/>
           </div>
-          <div className="col-md-4">
+          <div className="col-md-4 col-md-offset-6 fixed">
             <h2>Documents &amp; Tokens</h2>
             <TokenSets sets={this.state.tokens}/>
           </div>
@@ -53,7 +53,6 @@ export default class App extends React.Component {
         <h3>Files Loaded:</h3>
         <FileList texts={this.state.rawTexts} remove={this.removeTextFromStore.bind(this)}/>
         <h2>Transform Your Text</h2>
-        <h3>Split Documents</h3>
         <h3>Tokenize</h3>
         <TokenOptions store={this.store} options={this.state.tokenizeOptions} />
       </div>

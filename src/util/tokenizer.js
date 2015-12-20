@@ -1,7 +1,8 @@
 
 import { removeAllPunctuation,
          stringsToWords,
-         stringsToSentences } from './string_utility';
+         stringsToSentences,
+         removeStopWords } from './string_utility';
 
 export function createTokens(texts, options) {
   return texts.map((v) => {
@@ -17,6 +18,9 @@ export function createTokens(texts, options) {
           break;
         case 'splitSentences':
           tokens = stringsToSentences(tokens);
+          break;
+        case 'removeStopWords':
+          tokens = removeStopWords(tokens);
           break;
       }
     });

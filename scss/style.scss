@@ -2,3 +2,11 @@
 #main {
   padding-top: 20px;
 }
+
+.fixed {
+  top: 0;
+  bottom:0;
+  position:fixed;
+  overflow-y:scroll;
+  overflow-x:hidden;
+}
