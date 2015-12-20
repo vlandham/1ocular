@@ -12,7 +12,7 @@ export const ADD_TEXT = 'ADD_TEXT';
 export const REMOVE_TEXT = 'REMOVE_TEXT';
 export const CREATE_TOKENS = 'CREATE_TOKENS';
 
-export const SET_REMOVE_PUNCTUATION = 'SET_REMOVE_PUNCTUATION';
+export const UPDATE_TOKEN_OPTIONS = 'UPDATE_TOKEN_OPTIONS';
 
 /*
  * action creators
@@ -29,6 +29,6 @@ export function createTokens() {
   return { type: CREATE_TOKENS };
 }
 
-export function setRemovePunctuation(value) {
-  return { type: SET_REMOVE_PUNCTUATION, value };
+export function updateTokenizationOptions(key, enabled) {
+  return { type: UPDATE_TOKEN_OPTIONS, key, enabled };
 }

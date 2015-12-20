@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-import { setRemovePunctuation, createTokens } from '../model/actions';
+import { updateTokenizationOptions, createTokens } from '../model/actions';
 
 export default class TokenOptions extends React.Component {
   constructor() {
@@ -9,20 +9,37 @@ export default class TokenOptions extends React.Component {
   }
 
   updateRemovePunctuation(event) {
-    this.props.store.dispatch(setRemovePunctuation(event.target.checked));
+    this.props.store.dispatch(updateTokenizationOptions('removePunctuation', event.target.checked));
     this.props.store.dispatch(createTokens());
+  }
+
+  updateOptions(key, event) {
+    this.props.store.dispatch(updateTokenizationOptions(key, event.target.checked));
+    this.props.store.dispatch(createTokens());
+  }
+
+  renderCheckBox(key) {
+    var enabled = this.props.options[key].enabled;
+    var title = this.props.options[key].title;
+
+    return (
+      <div key={key} className="checkbox">
+        <label>
+          <input type="checkbox"
+            checked={enabled}
+            onChange={this.updateOptions.bind(this, key)} />
+          {title}</label>
+      </div>
+    );
+
   }
 
   render() {
     var options = this.props.options;
     return (
-      <div>
-        <label>Create Tokens From</label>
-        <label>Remove Punctuation</label>
-        <input type="checkbox"
-          checked={options.removePunctuation}
-          onChange={this.updateRemovePunctuation.bind(this)} />
-      </div>
+      <form>
+        {Object.keys(options).map(this.renderCheckBox.bind(this))}
+      </form>
     );
   }
 }

@@ -4,21 +4,19 @@ import Immutable from 'immutable';
 import { ADD_TEXT,
          REMOVE_TEXT,
          CREATE_TOKENS,
-         SET_REMOVE_PUNCTUATION
+         UPDATE_TOKEN_OPTIONS,
        } from './actions';
 
-import { removeAllPunctuation,
-         stringToWords,
-         stringToSentences } from '../util/string_utility';
+import { createTokens } from '../util/tokenizer';
 
 export var INITIAL_STATE = Immutable.fromJS({
   rawTexts: {},
   texts: {},
   tokens: {},
   tokenizeOptions: {
-    "removePunctuation" : true,
-    "split": "words",
-    "splitOptions": ["words", "sentences"]
+    "splitWords" : {"enabled": true, "title": "Split on words"},
+    // "splitSentences" : {"enabled": false, "title": "Split on Sentences"},
+    "removePunctuation" : {"enabled": true, "title": "Remove Punctuation"}
   }
 });
 
@@ -31,30 +29,9 @@ export default function reducer(state = INITIAL_STATE, action) {
     case CREATE_TOKENS:
       var tokens = createTokens(state.get('rawTexts'), state.get('tokenizeOptions'));
       return state.set('tokens', tokens);
-    case SET_REMOVE_PUNCTUATION:
-      return state.updateIn(['tokenizeOptions', 'removePunctuation'], () => action.value);
+    case UPDATE_TOKEN_OPTIONS:
+      return state.updateIn(['tokenizeOptions', action.key, "enabled"], () => action.enabled);
     default:
       return state;
   }
-}
-
-function createTokens(texts, options) {
-  return texts.map((v) => {
-    var tokens = v;
-    switch (options.get('split')) {
-      case 'words':
-        tokens = stringToWords(tokens);
-        break;
-      case 'sentences':
-        tokens = stringToSentences(tokens);
-        break;
-      default:
-        tokens = tokens;
-    }
-
-    if(options.get('removePunctuation')) {
-      tokens = removeAllPunctuation(tokens);
-    }
-    return tokens;
-  });
 }
