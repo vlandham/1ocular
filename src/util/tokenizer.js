@@ -2,7 +2,8 @@
 import { removeAllPunctuation,
          stringsToWords,
          stringsToSentences,
-         removeStopWords } from './string_utility';
+         removeStopWords,
+         toLowerCase } from './string_utility';
 
 export function createTokens(texts, options) {
   return texts.map((v) => {
@@ -21,6 +22,9 @@ export function createTokens(texts, options) {
           break;
         case 'removeStopWords':
           tokens = removeStopWords(tokens);
+          break;
+        case 'lowerCase':
+          tokens = toLowerCase(tokens);
           break;
       }
     });

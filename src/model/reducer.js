@@ -18,6 +18,7 @@ export var INITIAL_STATE = Immutable.fromJS({
     "splitSentences" : {"enabled": false, "title": "Split on Sentences"},
     "removePunctuation" : {"enabled": true, "title": "Remove Punctuation"},
     "removeStopWords" : {"enabled": true, "title": "Remove Stopwords"},
+    "lowerCase" : {"enabled": true, "title": "Lowercase All Words"},
   }
 });
 

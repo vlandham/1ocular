@@ -33,3 +33,7 @@ export function stringToSentences(string) {
 export function removeStopWords(words) {
   return _.filter(words, (word) => !_.contains(stopwords, word));
 }
+
+export function toLowerCase(words) {
+  return _.map(words, (word) => word.toLowerCase());
+}
