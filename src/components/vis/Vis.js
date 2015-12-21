@@ -12,7 +12,10 @@ export default class Vis extends React.Component {
 
   renderConcordance(key) {
     return (
-      <ConcordanceChart key={key} data={this.props.tokens[key]} search={this.state.search}/>
+      <div key={key}>
+        <h4>{key}</h4>
+        <ConcordanceChart key={key} data={this.props.tokens[key]} search={this.state.search}/>
+      </div>
     );
   }
 
