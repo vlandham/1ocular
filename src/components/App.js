@@ -10,7 +10,7 @@ import FileList from './FileList';
 import TokenSets from './TokenSets';
 import TokenOptions from './TokenOptions';
 
-import ConcordanceChart from './vis/ConcordanceChart';
+import Vis from './vis/Vis';
 
 /**
 * Main App for tool
@@ -39,11 +39,6 @@ export default class App extends React.Component {
     this.store.dispatch(createTokens());
   }
 
-  renderConcordance(key) {
-    return (
-      <ConcordanceChart key={key} data={this.state.tokens[key]} search="Alice"/>
-    );
-  }
 
   render() {
     return (
@@ -64,7 +59,7 @@ export default class App extends React.Component {
         <h3>Tokenize</h3>
         <TokenOptions store={this.store} options={this.state.tokenizeOptions} />
         <h3>Visualize</h3>
-        {Object.keys(this.state.tokens).map(this.renderConcordance.bind(this))}
+        <Vis tokens={this.state.tokens} />
       </div>
     );
   }

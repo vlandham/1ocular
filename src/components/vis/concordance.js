@@ -63,10 +63,8 @@ concordance.destroy = function() {
 //     .call(axis.x);
 // };
 
-concordance._draw = function(el, scales,  data) {
+concordance._draw = function(el, scales,  data, searchTerm) {
   var g = d3.select(el).selectAll('.concordance-lines');
-
-  var searchTerm = "Alice";
 
   var selectedWords = data.map(function(w,i) { return {w:w,i:i}; }).filter(function(d) { return d.w === searchTerm; });
 

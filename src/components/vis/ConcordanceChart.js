@@ -30,7 +30,7 @@ var Chart = React.createClass({
   getChartState: function() {
     return {
       data: this.props.data,
-      search: this.props.searchToken
+      search: this.props.search
     };
   },
 
