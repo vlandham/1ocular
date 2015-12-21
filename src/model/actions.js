@@ -13,6 +13,7 @@ export const REMOVE_TEXT = 'REMOVE_TEXT';
 export const CREATE_TOKENS = 'CREATE_TOKENS';
 
 export const UPDATE_TOKEN_OPTIONS = 'UPDATE_TOKEN_OPTIONS';
+export const UPDATE_VIS_OPTIONS = 'UPDATE_VIS_OPTIONS';
 
 /*
  * action creators
@@ -31,4 +32,8 @@ export function createTokens() {
 
 export function updateTokenizationOptions(key, enabled) {
   return { type: UPDATE_TOKEN_OPTIONS, key, enabled };
+}
+
+export function updateVisOptions(key, value) {
+  return { type: UPDATE_VIS_OPTIONS, key, value };
 }

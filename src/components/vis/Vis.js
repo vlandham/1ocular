@@ -5,30 +5,37 @@ import ConcordanceChart from './ConcordanceChart';
 export default class Vis extends React.Component {
   constructor() {
     super();
-    this.state = {
-      search: "lost"
-    };
   }
 
   renderConcordance(key) {
     return (
       <div key={key}>
         <h4>{key}</h4>
-        <ConcordanceChart key={key} data={this.props.tokens[key]} search={this.state.search}/>
+        <ConcordanceChart key={key} data={this.props.tokens[key]} search={this.props.options.searchToken}/>
+      </div>
+    );
+  }
+
+  renderConcordances() {
+    return (
+      <div>
+        <input type="text" value={this.props.options.searchToken} onChange={this.updateSearch.bind(this)} />
+        {Object.keys(this.props.tokens).map(this.renderConcordance.bind(this))}
       </div>
     );
   }
 
   updateSearch(event) {
-    this.setState({search: event.target.value});
+    this.props.updateVisOptions('searchToken', event.target.value);
   }
 
   render() {
-    return (
-      <div>
-        <input type="text" value={this.state.search} onChange={this.updateSearch.bind(this)} />
-        {Object.keys(this.props.tokens).map(this.renderConcordance.bind(this))}
-      </div>
-    );
+    switch(this.props.options.displayVis) {
+      case 'concordance':
+        return this.renderConcordances();
+      default:
+        return (<div></div>);
+
+    }
   }
 }

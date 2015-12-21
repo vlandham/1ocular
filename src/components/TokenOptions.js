@@ -1,21 +1,13 @@
 
 import React from 'react';
 
-import { updateTokenizationOptions, createTokens } from '../model/actions';
-
 export default class TokenOptions extends React.Component {
   constructor() {
     super();
   }
 
-  updateRemovePunctuation(event) {
-    this.props.store.dispatch(updateTokenizationOptions('removePunctuation', event.target.checked));
-    this.props.store.dispatch(createTokens());
-  }
-
   updateOptions(key, event) {
-    this.props.store.dispatch(updateTokenizationOptions(key, event.target.checked));
-    this.props.store.dispatch(createTokens());
+    this.props.updateTokenOptions(key, event.target.checked);
   }
 
   renderCheckBox(key) {
@@ -31,7 +23,6 @@ export default class TokenOptions extends React.Component {
           {title}</label>
       </div>
     );
-
   }
 
   render() {
@@ -45,6 +36,6 @@ export default class TokenOptions extends React.Component {
 }
 
 TokenOptions.propTypes = {
-  store: React.PropTypes.object,
-  options: React.PropTypes.object
+  options: React.PropTypes.object,
+  updateTokenOptions: React.PropTypes.func
 };

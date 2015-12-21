@@ -3,7 +3,7 @@ import React from 'react';
 import makeStore from '../model/store';
 import { INITIAL_STATE } from '../model/reducer';
 
-import { addText, removeText, createTokens } from '../model/actions';
+import { addText, removeText, createTokens, updateTokenizationOptions, updateVisOptions } from '../model/actions';
 
 import FileUpload from './FileUpload';
 import FileList from './FileList';
@@ -11,6 +11,7 @@ import TokenSets from './TokenSets';
 import TokenOptions from './TokenOptions';
 
 import Vis from './vis/Vis';
+import VisSelect from './vis/VisSelect';
 
 /**
 * Main App for tool
@@ -39,10 +40,19 @@ export default class App extends React.Component {
     this.store.dispatch(createTokens());
   }
 
+  updateTokenizationOptionsInStore(key, enabled) {
+    this.store.dispatch(updateTokenizationOptions(key, enabled));
+    this.store.dispatch(createTokens());
+  }
+
+  updateVisOptionsInStore(option, value) {
+    this.store.dispatch(updateVisOptions(option, value));
+  }
+
 
   render() {
     return (
-      <div>
+      <div className="main">
         <div className="row">
           <div className="col-md-6">
             <h2>Upload Your Text Files</h2>
@@ -57,9 +67,10 @@ export default class App extends React.Component {
         <FileList texts={this.state.rawTexts} remove={this.removeTextFromStore.bind(this)}/>
         <h2>Transform Your Text</h2>
         <h3>Tokenize</h3>
-        <TokenOptions store={this.store} options={this.state.tokenizeOptions} />
+        <TokenOptions options={this.state.tokenizeOptions} updateTokenOptions={this.updateTokenizationOptionsInStore.bind(this)}/>
         <h3>Visualize</h3>
-        <Vis tokens={this.state.tokens} />
+        <VisSelect options={this.state.visOptions} updateVisOptions={this.updateVisOptionsInStore.bind(this)} />
+        <Vis tokens={this.state.tokens} options={this.state.visOptions} updateVisOptions={this.updateVisOptionsInStore.bind(this)} />
       </div>
     );
   }
