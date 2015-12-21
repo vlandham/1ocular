@@ -12,8 +12,13 @@ concordance.create = function(el, props, state) {
       .attr('width', widthAbs)
       .attr('height', heightAbs);
 
-  svg.append('g')
+  var g = svg.append('g')
     .attr('class', 'concordance-lines');
+
+  g.append('rect')
+    .attr('class', 'concordance-background')
+    .attr('width', widthAbs)
+    .attr('height', heightAbs);
 
   // svg.append('g')
   //     .attr("transform", "translate(0," + (heightAbs - 20) + ")")

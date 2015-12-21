@@ -6,7 +6,7 @@ export default class Vis extends React.Component {
   constructor() {
     super();
     this.state = {
-      search: "alice"
+      search: "lost"
     };
   }
 
